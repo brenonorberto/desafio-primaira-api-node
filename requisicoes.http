@@ -1,0 +1,17 @@
+GET http://localhost:3333/courses
+###
+
+GET http://localhost:3333/courses/2
+
+###
+
+POST http://localhost:3333/courses
+Content-Type: application/json
+
+{
+  "name": "Node.js"
+}
+
+###
+
+DELETE http://localhost:3333/courses/2
