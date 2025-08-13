@@ -1,5 +1,20 @@
 import fastify from "fastify"
-import crypto from "node:crypto" // Biblioteca nativa do Node.js, colocar node: antes do nome da biblioteca
+import { fastifySwagger } from "@fastify/swagger"
+import scalarAPIReference from "@scalar/fastify-api-reference"
+// import crypto from "node:crypto" // Biblioteca nativa do Node.js, colocar node: antes do nome da biblioteca
+
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider,
+} from "fastify-type-provider-zod"
+
+import { createCourseRoute } from "./src/routes/create-course.ts"
+import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts"
+import { getCoursesRoute } from "./src/routes/get-courses.ts"
+
+import { deleteCourseRoute } from "./src/routes/delete-course.ts"
 
 const server = fastify({
   logger: {
@@ -8,79 +23,35 @@ const server = fastify({
       options: {
         colorize: true,
         translateTime: "HH:MM:ss Z",
-        ignore: "pid,hostname",
+        ignore: "pid,hosttitle",
       },
     },
   },
-})
+}).withTypeProvider<ZodTypeProvider>()
 
-const courses = [
-  { id: "1", name: "JavaScript Basics" },
-  { id: "2", name: "Advanced Node.js" },
-  { id: "3", name: "React for Beginners" },
-]
-
-server.get("/courses", () => {
-  return { courses }
-})
-
-server.get("/courses/:id", (request, reply) => {
-  type Params = {
-    id: string
-  }
-
-  const params = request.params as Params
-  const courseId = params.id
-
-  const course = courses.find((course) => course.id === courseId)
-
-  if (!course) {
-    return reply.status(404).send()
-  }
-
-  return { course }
-})
-
-server.post("/courses", (request, reply) => {
-  type CourseBody = {
-    name: string
-  }
-
-  const body = request.body as CourseBody
-
-  const courseId = crypto.randomUUID()
-  const courseName = body.name
-
-  if (!courseName) {
-    return reply.status(400).send({ message: "Nome obrigatório" })
-  }
-
-  courses.push({
-    id: courseId,
-    name: courseName,
+if (process.env.NODE_ENV === "development") {
+  server.register(fastifySwagger, {
+    openapi: {
+      info: {
+        title: "Desafio Node.js",
+        version: "1.0.0",
+      },
+    },
+    transform: jsonSchemaTransform,
   })
 
-  return reply.status(201).send({ courseId })
-})
+  server.register(scalarAPIReference, {
+    routePrefix: "/docs",
+  })
+}
 
-server.delete("/courses/:id", (request, reply) => {
-  type Params = {
-    id: string
-  }
+server.setSerializerCompiler(serializerCompiler)
+server.setValidatorCompiler(validatorCompiler)
 
-  const params = request.params as Params
-  const courseId = params.id
-
-  const courseIndex = courses.findIndex((course) => course.id === courseId)
-
-  if (courseIndex === -1) {
-    return reply.status(404).send()
-  }
-
-  courses.splice(courseIndex, 1)
-
-  return reply.status(204).send()
-})
+server.register(createCourseRoute)
+server.register(getCourseByIdRoute)
+server.register(getCoursesRoute)
+server.register(deleteCourseRoute)
 
 server
   .listen({
