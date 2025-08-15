@@ -10,11 +10,11 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod"
 
-import { createCourseRoute } from "./src/routes/create-course.ts"
-import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts"
-import { getCoursesRoute } from "./src/routes/get-courses.ts"
+import { createCourseRoute } from "../src/routes/create-course.ts"
+import { getCourseByIdRoute } from "../src/routes/get-course-by-id.ts"
+import { getCoursesRoute } from "../src/routes/get-courses.ts"
 
-import { deleteCourseRoute } from "./src/routes/delete-course.ts"
+import { deleteCourseRoute } from "../src/routes/delete-course.ts"
 
 const server = fastify({
   logger: {
@@ -53,10 +53,4 @@ server.register(getCourseByIdRoute)
 server.register(getCoursesRoute)
 server.register(deleteCourseRoute)
 
-server
-  .listen({
-    port: 3333,
-  })
-  .then(() => {
-    console.log("Server is running on http://localhost:3333")
-  })
+export { server }

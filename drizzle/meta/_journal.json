@@ -15,6 +15,34 @@
       "when": 1755091173892,
       "tag": "0001_bumpy_wild_pack",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1755192345620,
+      "tag": "0002_vengeful_famine",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1755192518871,
+      "tag": "0003_perpetual_red_shift",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1755194783340,
+      "tag": "0004_wide_dracula",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1755210032833,
+      "tag": "0005_dazzling_obadiah_stane",
+      "breakpoints": true
     }
   ]
 }
