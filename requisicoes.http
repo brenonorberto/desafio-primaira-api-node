@@ -1,5 +1,6 @@
 
 GET http://localhost:3333/courses
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNGZmZjk2Ni0yMTMyLTRmZTMtOGU4My1kZWZhNWMwYzIzZGMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTM3MzUwMX0.JBzAplOVQbtOnuASb2H4oKaSm-IP47nfeZHlQkbRrIo
 ###
 
 GET http://localhost:3333/courses/96745caa-b4f3-413d-884b-9f6d210d37a7
@@ -8,11 +9,22 @@ GET http://localhost:3333/courses/96745caa-b4f3-413d-884b-9f6d210d37a7
 
 POST http://localhost:3333/courses
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNGZmZjk2Ni0yMTMyLTRmZTMtOGU4My1kZWZhNWMwYzIzZGMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTM3NDAzOH0.vy2iF7kkyYHhRM9vzj6UQxYirTEfobYcs0fg8cnmn9Q
 
 {
-  "title": "Curso de Angular"
+  "title": "Curso de React"
 }
 
 ###
 
 DELETE http://localhost:3333/courses/d43f1fe4-523f-4d8f-8cd7-f40c9aa0ad7c
+
+###
+
+POST http://localhost:3333/session
+Content-Type: application/json
+
+{
+  "email": "JulioCesar_Melo56@hotmail.com",
+  "password": "123456"
+}
